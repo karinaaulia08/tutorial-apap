@@ -1,3 +1,3 @@
 # Tutorial APAP
 ## Authors
-* **<Nama Lengkap di SIAK-NG>** - *<NPM>* - *<Kelas>*
+* **Karina Aulia Putri** - *1906298954* - *C*
