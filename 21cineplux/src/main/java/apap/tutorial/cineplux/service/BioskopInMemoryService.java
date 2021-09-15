@@ -39,11 +39,6 @@ public class BioskopInMemoryService implements BioskopService{
     @Override
     public void updateBioskopByIdBioskop(String idBioskop, int jumlahStudio) {
         getBioskopByIdBioskop(idBioskop).setJumlahStudio(jumlahStudio);
-//        for (BioskopModel bioskop: listBioskop) {
-//            if (bioskop.getIdBioskop().equals(idBioskop)) {
-//                bioskop.setJumlahStudio(jumlahStudio);
-//            }
-//        }
     }
 
     @Override
