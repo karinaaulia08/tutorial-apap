@@ -17,8 +17,8 @@
    <br/> Konsep dependency injection.
    Spring Framework menyediakan fitur component-scan, sehingga ketika menggunakan anotasi @Autowired
    , Spring akan mencari komponen @Controller dan @Service dan melakukan inisialisasi, mengisi field
-   yang membutuhkan komponen dari @Controller dan @Service.
-   tersebut.
+   yang membutuhkan komponen dari @Controller dan @Service tersebut. Dengan demikian,
+   kita tidak perlu menambahkan setter atau constructor lagi.
 3. **Cobalah untuk menambahkan sebuah Bioskop dengan mengakses link
    berikut:
    [http://localhost:8080/bioskop/add?idBioskop=1&namaBioskop=Bioskop%20PAPA%20
