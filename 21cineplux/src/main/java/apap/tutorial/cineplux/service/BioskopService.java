@@ -13,4 +13,10 @@ public interface BioskopService {
 
     //Method untuk mendapatkan data sebuah bioskop berdasarkan id bioskop
     BioskopModel getBioskopByIdBioskop(String idBioskop);
+
+    //Method untuk mengupdate data jumlah bioskop berdasarkan id bioskop
+    void updateBioskopByIdBioskop(String idBioskop, int jumlahStudio);
+
+    //Method untuk menghapus data bioskop berdasarkan id bioskop
+    void deleteBioskopByIdBioskop(String idBioskop);
 }
