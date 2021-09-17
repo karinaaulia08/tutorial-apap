@@ -2,6 +2,41 @@
 ## Authors
 * **Karina Aulia Putri** - *1906298954* - *C*
 ---
+## Tutorial 2
+1. **Cobalah untuk menambahkan sebuah Bioskop dengan mengakses link berikut:
+   [http://localhost:8080/bioskop/add?idBioskop=1&namaBioskop=Bioskop%20PAPA%20
+   APAP&alamat=Maung%20Fasilkom&noTelepon=081xxx&jumlahStudio=10 ]()
+   Apa yang terjadi? Jelaskan mengapa hal tersebut dapat terjadi**
+   <br/> Terjadi Whitelabel Error Page, karena file add-bioskop.html belum dibuat, sedangkan link tersebut
+   mengarah ke method addBioskop pada controller yang mereturn "add-bioskop"
+   ![img_1.png](img_1.png)
+
+2. **Pertanyaan 2: Menurut kamu anotasi @Autowired pada class Controller tersebut
+   merupakan implementasi dari konsep apa? Dan jelaskan secara singkat cara kerja
+   @Autowired tersebut dalam konteks service dan controller yang telah kamu buat**
+   <br/> Konsep dependency injection.
+   Spring Framework menyediakan fitur component-scan, sehingga ketika menggunakan anotasi @Autowired
+   , Spring akan mencari komponen @Controller dan @Service dan melakukan inisialisasi, mengisi field
+   yang membutuhkan komponen dari @Controller dan @Service tersebut. Dengan demikian,
+   kita tidak perlu menambahkan setter atau constructor lagi.
+3. **Cobalah untuk menambahkan sebuah Bioskop dengan mengakses link
+   berikut:
+   [http://localhost:8080/bioskop/add?idBioskop=1&namaBioskop=Bioskop%20PAPA%20
+   APAP&alamat=Maung%20Fasilkom&noTelepon=081xxx]() Apa yang terjadi? Jelaskan
+   mengapa hal tersebut dapat terjadi.**
+   <br/> Terjadi Whitelabel Error Page. Hal ini terjadi dikarenakan parameter untuk jumlahStudio tidak dicantumkan
+   pada link, padahal sudah diset required = true yang berarti wajib untuk diisi.
+   ![img_3.png](img_3.png)
+4. **Jika Papa APAP ingin melihat Bioskop dengan nama Bioskop Maung,
+   link apa yang harus diakses?**
+   <br/> Mungkin maksudnya alamat Bioskop Maung ya. Link yang bisa diakses adalah
+   [http://localhost:8080/bioskop/view?idBioskop=1](http://localhost:8080/bioskop/view/id-bioskop/1)
+5. **Tambahkan 1 contoh Bioskop lainnya sesukamu. Lalu cobalah untuk
+   mengakses http://localhost:8080/bioskop/viewall , apa yang akan ditampilkan? Sertakan
+   juga bukti screenshotmu.**
+   <br/> Yang ditampilkan adalah seluruh bioskop yang tersimpan dalam listBioskop beserta detailnya.
+   ![img_5.png](img_5.png)
+
 ## Tutorial 1
 ### What I have learned today
 
@@ -50,11 +85,12 @@
    mendapatkan values dari URI path. Kita bisa menggunakan @RequestParam jika memerlukan default value
    yang dibuat untuk meng-handle value yang kosong, kita tidak bisa menggunakan @PathVariable, karena jika
    value-nya kosong akan error.
-### What I did not understand
-- [ ] Kenapa saya harus belajar APAP?
-- [ ] Konsep Inversion of Control (IoC)
-- [ ] Konsep Dependency Injection
 
+
+
+### What I did not understand
+- [] Konsep Inversion of Control (IoC)
+- [] Konsep Dependency Injection
   (Anda dapat membuat tampilan code dalam README.md menjadi lebih baik. Cari tahu
   lebih dalam tentang penulisan README.md di GitHub pada link
   [berikut](https://help.github.com/en/articles/basic-writing-and-formatting-syntax))
