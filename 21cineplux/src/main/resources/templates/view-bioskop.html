@@ -20,20 +20,24 @@
                 <p th:text="'Jumlah Studio Bioskop : ' + ${bioskop.jumlahStudio}"></p>
                 <p th:text="'Waktu Buka Bioskop : ' + ${bioskop.waktuBuka}"></p>
                 <p th:text="'Waktu Tutup Bioskop : ' + ${bioskop.waktuTutup}"></p>
+                <a class="btn btn-outline-danger" th:href="@{/bioskop/delete/} + ${bioskop.noBioskop}">Delete Bioskop</a>
+                <br><br>
                 <div class="col">
                     <h6>Penjaga : </h6>
                     <div th:each="penjaga : ${listPenjaga}">
                         <p th:text="'Nama : ' + ${penjaga.namaPenjaga}"></p>
                         <p th:if="${penjaga.jenisKelamin == 0}">Jenis Kelamin : Perempuan</p>
                         <p th:if="${penjaga.jenisKelamin == 1}">Jenis Kelamin : Laki-laki</p>
-                        <a th:if="${isBioskopOpen == false}" class="btn btn-primary" th:href="@{/penjaga/update/} + ${penjaga.noPenjaga}">update penjaga</a>
-
+                        <div th:if="${isBioskopOpen}">
+                        <a class="btn btn-success btn-sm" th:href="@{/penjaga/update/} + ${penjaga.noPenjaga}">Update Penjaga</a>
+                        <a class="btn btn-danger btn-sm" th:href="@{/penjaga/delete/} + ${penjaga.noPenjaga}">Delete Penjaga</a>
+                        </div>
                         <hr>
                     </div>
                 </div>
                 <br>
                 <a class="btn btn-primary" href="/bioskop/viewall">Kembali</a>
-                <a class="btn btn-primary" th:href="@{/penjaga/add/} + ${bioskop.noBioskop}">tambah penjaga</a>
+                <a class="btn btn-primary" th:href="@{/penjaga/add/} + ${bioskop.noBioskop}">Tambah Penjaga</a>
             </div>
         </div>
     </div>

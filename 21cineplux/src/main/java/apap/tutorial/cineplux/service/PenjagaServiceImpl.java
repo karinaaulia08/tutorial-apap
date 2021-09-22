@@ -33,4 +33,9 @@ public class PenjagaServiceImpl implements PenjagaService{
     public void updatePenjaga(PenjagaModel penjaga) {
         penjagaDB.save(penjaga);
     }
+
+    @Override
+    public void deletePenjaga(PenjagaModel penjaga) {
+        penjagaDB.delete(penjaga);
+    }
 }

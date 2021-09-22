@@ -28,6 +28,11 @@ public class BioskopServiceImpl implements BioskopService{
     }
 
     @Override
+    public void deleteBioskop(BioskopModel bioskop) {
+        bioskopDB.delete(bioskop);
+    }
+
+    @Override
     public List<BioskopModel> getBioskopList() {
         return bioskopDB.findAll(Sort.by(Sort.Direction.ASC, "namaBioskop")
         );

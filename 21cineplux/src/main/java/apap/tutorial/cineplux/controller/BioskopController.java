@@ -5,14 +5,13 @@ import apap.tutorial.cineplux.model.PenjagaModel;
 import apap.tutorial.cineplux.service.BioskopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.convert.JodaTimeConverters;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,9 +54,13 @@ public class BioskopController {
         List<PenjagaModel> listPenjaga = bioskop.getListPenjaga();
         LocalTime waktuBuka = bioskop.getWaktuBuka();
         LocalTime waktuTutup = bioskop.getWaktuTutup();
-        LocalTime waktuSekarang = LocalTime.now();
+        LocalTime waktuSekarang = LocalTime.now(ZoneId.of("Asia/Jakarta"));
         Boolean isBioskopOpen = true;
+        System.out.println(waktuSekarang);
+        System.out.println(waktuBuka);
+        System.out.println(waktuTutup);
         if(waktuSekarang.isAfter(waktuTutup) && waktuSekarang.isBefore(waktuBuka)) {
+            System.out.println("udahtutup");
             isBioskopOpen = false;
         }
         model.addAttribute("bioskop", bioskop);
@@ -85,5 +88,24 @@ public class BioskopController {
         bioskopService.updateBioskop(bioskop);
         model.addAttribute("noBioskop", bioskop.getNoBioskop());
         return "update-bioskop";
+    }
+
+    @GetMapping("/bioskop/delete/{noBioskop}")
+    public String deleteBioskop(
+            @PathVariable(value = "noBioskop") Long noBioskop,
+            Model model
+    ) {
+        BioskopModel bioskop = bioskopService.getBioskopByNoBioskop(noBioskop);
+        String message = "berhasil dihapus";
+        if (bioskop == null) {
+            message = "tidak ditemukan";
+        } else if (bioskop.getListPenjaga().size() != 0) {
+            message = "tidak dapat dihapus karena memiliki penjaga";
+        } else {
+            bioskopService.deleteBioskop(bioskop);
+        }
+        model.addAttribute("noBioskop", noBioskop);
+        model.addAttribute("message", message);
+        return "delete-bioskop";
     }
 }
