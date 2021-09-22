@@ -26,7 +26,8 @@
                         <p th:text="'Nama : ' + ${penjaga.namaPenjaga}"></p>
                         <p th:if="${penjaga.jenisKelamin == 0}">Jenis Kelamin : Perempuan</p>
                         <p th:if="${penjaga.jenisKelamin == 1}">Jenis Kelamin : Laki-laki</p>
-                        <a class="btn btn-primary" th:href="@{/penjaga/update/} + ${penjaga.noPenjaga}">update penjaga</a>
+                        <a th:if="${isBioskopOpen == false}" class="btn btn-primary" th:href="@{/penjaga/update/} + ${penjaga.noPenjaga}">update penjaga</a>
+
                         <hr>
                     </div>
                 </div>
