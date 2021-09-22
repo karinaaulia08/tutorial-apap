@@ -20,17 +20,17 @@ public class PenjagaServiceImpl implements PenjagaService{
         penjagaDB.save(penjaga);
     }
 
-//    @Override
-//    public PenjagaModel getPenjagaByNoPenjaga(Long noPenjaga) {
-//        Optional<PenjagaModel> penjaga = penjagaDB.findByNoPenjaga(noPenjaga);
-//        if (penjaga.isPresent()) {
-//            return penjaga.get();
-//        }
-//        return null;
-//    }
-//
-//    @Override
-//    public void updatePenjaga(PenjagaModel penjaga) {
-//        penjagaDB.save(penjaga);
-//    }
+    @Override
+    public PenjagaModel getPenjagaByNoPenjaga(Long noPenjaga) {
+        Optional<PenjagaModel> penjaga = penjagaDB.findByNoPenjaga(noPenjaga);
+        if (penjaga.isPresent()) {
+            return penjaga.get();
+        }
+        return null;
+    }
+
+    @Override
+    public void updatePenjaga(PenjagaModel penjaga) {
+        penjagaDB.save(penjaga);
+    }
 }

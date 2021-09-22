@@ -46,24 +46,25 @@ public class PenjagaController {
         return "add-penjaga";
     }
 
-//    @GetMapping("/penjaga/update/{noPenjaga}")
-//    public String updatePenjagaForm(
-//            @PathVariable Long noPenjaga,
-//            Model model
-//    ) {
-//        PenjagaModel penjaga = penjagaService.getPenjagaByNoPenjaga(noPenjaga);
-//        model.addAttribute("penjaga", penjaga);
-//        return "form-update-penjaga";
-//    }
-//
-//    @PostMapping("/penjaga/update")
-//    public String updatePenjagaSubmit(
-//            @ModelAttribute PenjagaModel penjaga,
-//            Model model
-//    ) {
-//        penjagaService.updatePenjaga(penjaga);
-//        model.addAttribute("noPenjaga", penjaga.getNoPenjaga());
-//        model.addAttribute("noBioskop", penjaga.getBioskop());
-//        return "update-penjaga";
-//    }
+    @GetMapping("/penjaga/update/{noPenjaga}")
+    public String updatePenjagaForm(
+            @PathVariable Long noPenjaga,
+            Model model
+    ) {
+        PenjagaModel penjaga = penjagaService.getPenjagaByNoPenjaga(noPenjaga);
+        model.addAttribute("penjaga", penjaga);
+        model.addAttribute("bioskop", penjaga.getBioskop());
+        return "form-update-penjaga";
+    }
+
+    @PostMapping("/penjaga/update")
+    public String updatePenjagaSubmit(
+            @ModelAttribute PenjagaModel penjaga,
+            Model model
+    ) {
+        penjagaService.updatePenjaga(penjaga);
+        model.addAttribute("noPenjaga", penjaga.getNoPenjaga());
+        model.addAttribute("noBioskop", penjaga.getBioskop().getNoBioskop());
+        return "update-penjaga";
+    }
 }

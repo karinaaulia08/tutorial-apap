@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface PenjagaDB extends JpaRepository<PenjagaModel, Long> {
-//    Optional<PenjagaModel> findByNoPenjaga(Long noPenjaga);
+    Optional<PenjagaModel> findByNoPenjaga(Long noPenjaga);
 }
 

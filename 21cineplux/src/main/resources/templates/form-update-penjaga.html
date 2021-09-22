@@ -14,8 +14,9 @@
             <div class="justify-content-center">
                 <h2>Update Penjaga</h2>
                 <br>
-                <form th:action="@{/penjaga/add}" th:object="${penjaga}" method="POST">
+                <form th:action="@{/penjaga/update}" th:object="${penjaga}" method="POST">
                     <input type="hidden" th:field="*{noPenjaga}" />
+                    <input type="hidden" th:field="*{bioskop}" />
 
                     Nama Penjaga : <br>
                     <input required class="form-control" type="text" name="namaPenjaga" />
