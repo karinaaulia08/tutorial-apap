@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,21 +50,20 @@ public class BioskopController {
             Model model
     ) {
         BioskopModel bioskop = bioskopService.getBioskopByNoBioskop(noBioskop);
+        if (bioskop == null) {
+            return "error-bioskop";
+        }
         List<PenjagaModel> listPenjaga = bioskop.getListPenjaga();
         LocalTime waktuBuka = bioskop.getWaktuBuka();
         LocalTime waktuTutup = bioskop.getWaktuTutup();
         LocalTime waktuSekarang = LocalTime.now(ZoneId.of("Asia/Jakarta"));
-        Boolean isBioskopOpen = true;
-        System.out.println(waktuSekarang);
-        System.out.println(waktuBuka);
-        System.out.println(waktuTutup);
-        if(waktuSekarang.isAfter(waktuTutup) && waktuSekarang.isBefore(waktuBuka)) {
-            System.out.println("udahtutup");
-            isBioskopOpen = false;
+        boolean isBioskopClose = false;
+        if(waktuSekarang.isAfter(waktuTutup) || waktuSekarang.isBefore(waktuBuka)) {
+            isBioskopClose = true;
         }
         model.addAttribute("bioskop", bioskop);
         model.addAttribute("listPenjaga", listPenjaga);
-        model.addAttribute("isBioskopOpen", isBioskopOpen);
+        model.addAttribute("isBioskopClose", isBioskopClose);
 
         return "view-bioskop";
     }
@@ -76,6 +74,9 @@ public class BioskopController {
             Model model
     ) {
         BioskopModel bioskop = bioskopService.getBioskopByNoBioskop(noBioskop);
+        if (bioskop == null) {
+            return "error-bioskop";
+        }
         model.addAttribute("bioskop", bioskop);
         return "form-update-bioskop";
     }

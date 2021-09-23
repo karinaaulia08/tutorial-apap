@@ -20,17 +20,32 @@
                 <p th:text="'Jumlah Studio Bioskop : ' + ${bioskop.jumlahStudio}"></p>
                 <p th:text="'Waktu Buka Bioskop : ' + ${bioskop.waktuBuka}"></p>
                 <p th:text="'Waktu Tutup Bioskop : ' + ${bioskop.waktuTutup}"></p>
-                <a class="btn btn-outline-danger" th:href="@{/bioskop/delete/} + ${bioskop.noBioskop}">Delete Bioskop</a>
-                <br><br>
+                <div th:if="${isBioskopClose}">
+                    <div class="alert alert-danger" role="alert">
+                        Bioskop Sudah Tutup
+                    </div>
+                    <a class="btn btn-outline-danger" th:href="@{/bioskop/delete/} + ${bioskop.noBioskop}">Delete Bioskop</a>
+                </div>
+                <div th:unless="${isBioskopClose}">
+                    <div class="alert alert-success" role="alert">
+                        Bioskop Buka
+                    </div>
+                    <a class="btn btn-outline-danger disabled" th:href="@{/bioskop/delete/} + ${bioskop.noBioskop}" role="button" aria-disabled="true">Delete Bioskop</a>
+                </div>
+                <br>
                 <div class="col">
                     <h6>Penjaga : </h6>
                     <div th:each="penjaga : ${listPenjaga}">
                         <p th:text="'Nama : ' + ${penjaga.namaPenjaga}"></p>
                         <p th:if="${penjaga.jenisKelamin == 0}">Jenis Kelamin : Perempuan</p>
                         <p th:if="${penjaga.jenisKelamin == 1}">Jenis Kelamin : Laki-laki</p>
-                        <div th:if="${isBioskopOpen}">
-                        <a class="btn btn-success btn-sm" th:href="@{/penjaga/update/} + ${penjaga.noPenjaga}">Update Penjaga</a>
-                        <a class="btn btn-danger btn-sm" th:href="@{/penjaga/delete/} + ${penjaga.noPenjaga}">Delete Penjaga</a>
+                        <div th:if="${isBioskopClose}">
+                            <a  class="btn btn-success btn-sm" th:href="@{/penjaga/update/} + ${penjaga.noPenjaga}">Update Penjaga</a>
+                            <a  class="btn btn-danger btn-sm" th:href="@{/penjaga/delete/} + ${penjaga.noPenjaga}">Delete Penjaga</a>
+                        </div>
+                        <div th:unless="${isBioskopClose}">
+                            <a  class="btn btn-success btn-sm disabled" th:href="@{/penjaga/update/} + ${penjaga.noPenjaga}" role="button" aria-disabled="true">Update Penjaga</a>
+                            <a  class="btn btn-danger btn-sm disabled" th:href="@{/penjaga/delete/} + ${penjaga.noPenjaga}" role="button" aria-disabled="true">Delete Penjaga</a>
                         </div>
                         <hr>
                     </div>

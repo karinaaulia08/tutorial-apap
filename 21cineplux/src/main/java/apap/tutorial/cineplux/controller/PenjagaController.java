@@ -52,6 +52,9 @@ public class PenjagaController {
             Model model
     ) {
         PenjagaModel penjaga = penjagaService.getPenjagaByNoPenjaga(noPenjaga);
+        if (penjaga == null) {
+            return "error-penjaga";
+        }
         model.addAttribute("penjaga", penjaga);
         model.addAttribute("bioskop", penjaga.getBioskop());
         return "form-update-penjaga";
@@ -74,11 +77,20 @@ public class PenjagaController {
             Model model
     ) {
         PenjagaModel penjaga = penjagaService.getPenjagaByNoPenjaga(noPenjaga);
-        String namaPenjaga = penjaga.getNamaPenjaga();
-        Long noBioskop = penjaga.getBioskop().getNoBioskop();
-        penjagaService.deletePenjaga(penjaga);
+        String namaPenjaga = "";
+        Long noBioskop = null;
+        String message = " ";
+        if (penjaga == null) {
+            message = "penjaga dengan id " + noPenjaga + " tidak ditemukan";
+        } else {
+            namaPenjaga = penjaga.getNamaPenjaga();
+            noBioskop = penjaga.getBioskop().getNoBioskop();
+            penjagaService.deletePenjaga(penjaga);
+            message = "Bioskop dengan nomor bioskop " + noBioskop + " berhasil menghapus " + namaPenjaga + " sebagai penjaga";
+        }
         model.addAttribute("noBioskop", noBioskop);
         model.addAttribute("namaPenjaga", namaPenjaga);
+        model.addAttribute("message", message);
         return "delete-penjaga";
     }
 

@@ -57,12 +57,12 @@ public class BioskopModel implements Serializable{
     @OneToMany(mappedBy = "bioskop", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<PenjagaModel> listPenjaga;
 
-    //Relasi dengan FileModel
+    //Relasi dengan FilmModel
     @ManyToMany
     @JoinTable(
             name = "film_bioskop",
             joinColumns = @JoinColumn(name = "no_bioskop"),
-            inverseJoinColumns = @JoinColumn(name = "no_file")
+            inverseJoinColumns = @JoinColumn(name = "no_film")
     )
     List<FilmModel> listFilm;
 }
