@@ -2,6 +2,42 @@
 ## Authors
 * **Karina Aulia Putri** - *1906298954* - *C*
 ---
+## Tutorial 3
+**1. Tolong jelaskan secara singkat apa kegunaan dari anotasi-anotasi yang ada pada model
+   (@AllArgsConstructor, @NoArgsConstructor, @Setter, @Getter, @Entity, @Table)**
+   - @AllArgsConstructor membuatkan sebuah constructor dengan satu parameter untuk tiap
+   field pada class. Secara default, constructor yang dibuat bertipe public.
+   - @NoArgsConstructor membuatkan sebuah constructor tanpa parameter, perlu set attribute
+     force=true apabila ada field yang tidak diset final.
+   - @Setter dan @Getter digunakan untuk membuat sebuah Setter dan Getter secara otomatis.
+   - @Entity digunakan untuk mengubah JavaBean menjadi sebuah entity dengan tujuan agar dapat
+     memanipulasi database.
+   - @Table digunakan untuk mengubah nama tabel database, jika tidak menggunakan @Table, by default
+     adalah nama tabelnya = nama class.
+   
+**2. Pada class BioskopDB, terdapat method findByNoBioskop, apakah kegunaan dari method
+   tersebut?**
+   findByNoBioskop disitu sama seperti method findById, dimana pada BioskopModel telah diset @Id
+   adalah noBioskop, sehingga  method ini akan mencari bioskop berdasarkan Idnya yaitu noBioskop.
+
+**3. Jelaskan perbedaan kegunaan dari anotasi @JoinTable dan @JoinColumn**
+   @JoinTable menyimpan Id dari tiap entity di tabel yang terpisah dan menampung relasi yang ada, sedangkan @JoinColumn
+   menyimpan Id di kolom baru pada tabel yang sama.
+
+**4. Pada class PenjagaModel, digunakan anotasi @JoinColumn pada atribut bioskop, apa
+   kegunaan dari name, referencedColumnName, dan nullable dalam anotasi tersebut? dan apa
+   perbedaan nullable dan penggunaan anotasi @NotNull**
+   PenjagaModel memiliki hubungan ManytoOne dengan BioskopModel, dimana tiap penjaga memiliki satu bioskop yang tersimpan.
+   name = "no_bioskop", referencedColumnName = "noBioskop" menunjukkan bahwa kita ingin membuat sebuah kolom no_bioskop yang merujuk kepada
+   noBioskop yang merupakan Id dari BioskopModel. nullable digunakan untuk memperbolehkan kolom no_bioskop memiliki nilai
+   null, sedangkan @NotNull melarang nilai dari field yang memiliki anotasi @NotNull berisi null. 
+
+**5. Jelaskan kegunaan FetchType.LAZY, CascadeType.ALL, dan FetchType.EAGER**
+   FetchType.Eager mengambil data dari tabel beserta data dari semua relasi yang dimiliki tabel, FetchType.LAZY hanya mendapatkan
+   data dari tabel yang dituju saja tanpa relasinya, sedangkan CascadeType.ALL mengakibatkan ketika kita mengubah suatu entity (misal: remove), maka entity
+   yang memiliki relasi dengan entity tersebut juga ikut diubah. 
+
+
 ## Tutorial 2
 1. **Cobalah untuk menambahkan sebuah Bioskop dengan mengakses link berikut:
    [http://localhost:8080/bioskop/add?idBioskop=1&namaBioskop=Bioskop%20PAPA%20
