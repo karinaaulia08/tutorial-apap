@@ -65,10 +65,14 @@ public class PenjagaController {
             @ModelAttribute PenjagaModel penjaga,
             Model model
     ) {
-        penjagaService.updatePenjaga(penjaga);
-        model.addAttribute("noPenjaga", penjaga.getNoPenjaga());
-        model.addAttribute("noBioskop", penjaga.getBioskop().getNoBioskop());
-        return "update-penjaga";
+        if(penjagaService.getPenjagaByNamaPenjaga(penjaga.getNamaPenjaga()) == null) {
+            penjagaService.updatePenjaga(penjaga);
+            model.addAttribute("noPenjaga", penjaga.getNoPenjaga());
+            model.addAttribute("noBioskop", penjaga.getBioskop().getNoBioskop());
+            return "update-penjaga";
+        } else {
+            return "error-update-penjaga";
+        }
     }
 
     @GetMapping("/penjaga/delete/{noPenjaga}")
