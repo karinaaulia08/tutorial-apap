@@ -1,6 +1,18 @@
 package apap.tutorial.cineplux.controller;
 
 import apap.tutorial.cineplux.model.BioskopModel;
+import apap.tutorial.cineplux.model.PenjagaModel;
+import apap.tutorial.cineplux.service.BioskopService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+=======
 import apap.tutorial.cineplux.service.BioskopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,116 +24,97 @@ import java.util.List;
 
 @Controller
 public class BioskopController {
+
+    @Qualifier("bioskopServiceImpl")
     @Autowired
     private BioskopService bioskopService;
 
-    //Routing URL yang diinginkan
-    @RequestMapping("/bioskop/add")
-    public String addBioskop(
-            //Request parameter yang ingin digunakan
-            @RequestParam(value = "idBioskop", required = true) String idBioskop,
-            @RequestParam(value = "namaBioskop", required = true) String namaBioskop,
-            @RequestParam(value = "alamat", required = true) String alamat,
-            @RequestParam(value = "noTelepon", required = true) String noTelepon,
-            @RequestParam(value = "jumlahStudio", required = true) int jumlahStudio,
+    @GetMapping("/bioskop/add")
+    public String addBioskopForm(Model model) {
+        model.addAttribute("bioskop", new BioskopModel());
+        return "form-add-bioskop";
+    }
+
+    @PostMapping("/bioskop/add")
+    public String addBioskopSubmit(
+            @ModelAttribute BioskopModel bioskop,
             Model model
     ) {
-        //Membuat objek BioskopModel
-        BioskopModel bioskopModel = new BioskopModel(idBioskop, namaBioskop, alamat, noTelepon, jumlahStudio);
-
-        //Menambahkan objek BioskopModel kedalam service
-        bioskopService.addBioskop(bioskopModel);
-
-        //Add variabel id bioskop ke "idBioskop" untuk dirender ke dalam thymeleaf
-        model.addAttribute("idBioskop", idBioskop);
-
-        //Return view template yang digunakan
+        bioskopService.addBioskop(bioskop);
+        model.addAttribute("noBioskop", bioskop.getNoBioskop());
         return "add-bioskop";
     }
 
-    @RequestMapping("/bioskop/viewall")
-    public String listBioskop(Model model){
-        //Mendapatkan semua bioskop
+    @GetMapping("/bioskop/viewall")
+    public String listBioskop(Model model) {
         List<BioskopModel> listBioskop = bioskopService.getBioskopList();
-
-        //Add varible semua BioskopModel ke 'listBioskop' untuk dirender dalam thymeleaf
         model.addAttribute("listBioskop", listBioskop);
-
-        //Return view template yang diinginkan
         return "viewall-bioskop";
     }
 
-    @RequestMapping("/bioskop/view")
-    public String detailBioskop(
-            @RequestParam(value = "idBioskop", required = true) String idBioskop,
-            Model model
-    ){
-        //Mendapatkan bioskop sesuai dengan idBioskop
-        BioskopModel bioskopModel = bioskopService.getBioskopByIdBioskop(idBioskop);
-
-        //Add variable BioskopModel ke 'bioskop' untuk dirender ke dalam thymeleaf
-        model.addAttribute("bioskop", bioskopModel);
-
-        //Return view template
-        return "view-bioskop";
-    }
-
-    @RequestMapping("/bioskop/view/id-bioskop/{idBioskop}")
-    public String detailBioskopWithPathVariable(
-            @PathVariable(value = "idBioskop") String idBioskop,
+    @GetMapping("/bioskop/view")
+    public String viewDetailBioskop(
+            @RequestParam(value = "noBioskop") Long noBioskop,
             Model model
     ) {
-        //Mendapatkan bioskop sesuai dengan idBioskop
-        BioskopModel bioskopModel = bioskopService.getBioskopByIdBioskop(idBioskop);
-
-        //Add variable bioskopModel dan message untuk dirender ke dalam thymeleaf
-        model.addAttribute("bioskop", bioskopModel);
-        model.addAttribute("idBioskop", idBioskop);
-
-        //Return view template
-        return "view-bioskop";
-    }
-
-    @RequestMapping("/bioskop/update/id-bioskop/{idBioskop}/jumlah-studio/{jumlahStudio}")
-    public String updateJumlahStudioById(
-            @PathVariable(value = "idBioskop") String idBioskop,
-            @PathVariable(value = "jumlahStudio") int jumlahStudio,
-            Model model
-    ) {
-        String message = "berhasil diupdate menjadi";
-        if (bioskopService.getBioskopByIdBioskop(idBioskop) == null) {
-            message = "tidak ditemukan, sehingga tidak berhasil diupdate menjadi";
-        } else {
-            //Mengupdate bioskop sesuai dengan idBioskop
-            bioskopService.updateBioskopByIdBioskop(idBioskop, jumlahStudio);
+        BioskopModel bioskop = bioskopService.getBioskopByNoBioskop(noBioskop);
+        if (bioskop == null) {
+            return "error-bioskop";
         }
+        List<PenjagaModel> listPenjaga = bioskop.getListPenjaga();
+        LocalTime waktuBuka = bioskop.getWaktuBuka();
+        LocalTime waktuTutup = bioskop.getWaktuTutup();
+        LocalTime waktuSekarang = LocalTime.now(ZoneId.of("Asia/Jakarta"));
+        boolean isBioskopClose = false;
+        if(waktuSekarang.isAfter(waktuTutup) || waktuSekarang.isBefore(waktuBuka)) {
+            isBioskopClose = true;
+        }
+        model.addAttribute("bioskop", bioskop);
+        model.addAttribute("listPenjaga", listPenjaga);
+        model.addAttribute("isBioskopClose", isBioskopClose);
 
-        //Add variable idBioskop, jumlahStudio, dan message untuk dirender ke dalam thymeleaf
-        model.addAttribute("idBioskop", idBioskop);
-        model.addAttribute("jumlahStudio", jumlahStudio);
-        model.addAttribute("message", message);
+        return "view-bioskop";
+    }
 
-        //Return view template
+    @GetMapping("/bioskop/update/{noBioskop}")
+    public String updateBioskopForm(
+            @PathVariable Long noBioskop,
+            Model model
+    ) {
+        BioskopModel bioskop = bioskopService.getBioskopByNoBioskop(noBioskop);
+        if (bioskop == null) {
+            return "error-bioskop";
+        }
+        model.addAttribute("bioskop", bioskop);
+        return "form-update-bioskop";
+    }
+
+    @PostMapping("/bioskop/update")
+    public String updateBioskopSubmit(
+            @ModelAttribute BioskopModel bioskop,
+            Model model
+    ) {
+        bioskopService.updateBioskop(bioskop);
+        model.addAttribute("noBioskop", bioskop.getNoBioskop());
         return "update-bioskop";
     }
 
-    @RequestMapping("/bioskop/delete/id-bioskop/{idBioskop}")
+    @GetMapping("/bioskop/delete/{noBioskop}")
     public String deleteBioskop(
-            @PathVariable(value = "idBioskop") String idBioskop,
+            @PathVariable(value = "noBioskop") Long noBioskop,
             Model model
     ) {
+        BioskopModel bioskop = bioskopService.getBioskopByNoBioskop(noBioskop);
         String message = "berhasil dihapus";
-        if (bioskopService.getBioskopByIdBioskop(idBioskop) == null) {
+        if (bioskop == null) {
             message = "tidak ditemukan";
+        } else if (bioskop.getListPenjaga().size() != 0) {
+            message = "tidak dapat dihapus karena memiliki penjaga";
         } else {
-            //Menghapus bioskop sesuai dengan idBioskop
-            bioskopService.deleteBioskopByIdBioskop(idBioskop);
+            bioskopService.deleteBioskop(bioskop);
         }
-        //Add variable idBioskop dan message untuk dirender ke dalam thymeleaf
-        model.addAttribute("idBioskop", idBioskop);
+        model.addAttribute("noBioskop", noBioskop);
         model.addAttribute("message", message);
-
-        //Return view template
         return "delete-bioskop";
     }
 }
