@@ -12,25 +12,56 @@
 <div class="container">
     <h2>Daftar Seluruh Bioskop</h2>
     <br>
-    <div th:each="bioskop : ${listBioskop}" class="card m-4 p-4">
-        <div class="card-body">
-            <div class="justify-content-center">
-                <p th:text="'Nomor Bioskop : ' + ${bioskop.noBioskop}"></p>
-                <p th:text="'Nama Bioskop : ' + ${bioskop.namaBioskop}"></p>
-                <p th:text="'Alamat Bioskop : ' + ${bioskop.alamatBioskop}"></p>
-                <p th:text="'Jumlah Studio Bioskop : ' + ${bioskop.jumlahStudio}"></p>
-                <p th:text="'Waktu Buka Bioskop : ' + ${bioskop.waktuBuka}"></p>
-                <p th:text="'Waktu Tutup Bioskop : ' + ${bioskop.waktuTutup}"></p>
-                <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>No Bioskop</th>
+            <th>Nama Bioskop</th>
+            <th>Alamat Bioskop</th>
+            <th>Jumlah Studio</th>
+            <th>Waktu Buka</th>
+            <th>Waktu Tutup</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="bioskop, iterationStatus : ${listBioskop}">
+            <td th:text="${iterationStatus.count}"></td>
+            <td th:text="${bioskop.noBioskop}"></td>
+            <td th:text="${bioskop.namaBioskop}"></td>
+            <td th:text="${bioskop.alamatBioskop}"></td>
+            <td th:text="${bioskop.jumlahStudio}"></td>
+            <td th:text="${bioskop.waktuBuka}"></td>
+            <td th:text="${bioskop.waktuTutup}"></td>
+            <td>
                 <a class="btn btn-primary" th:href="@{/bioskop/view(noBioskop=${bioskop.noBioskop})}">Detail
                     Bioskop</a>
                 <a class="btn btn-primary" th:href="@{/bioskop/update/} + ${bioskop.noBioskop}">Update Bioskop</a>
-            </div>
-        </div>
-        <br>
-    </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
     <a class="btn btn-primary" href="/">Home</a>
 </div>
+<!--    <div th:each="bioskop : ${listBioskop}" class="card m-4 p-4">-->
+<!--        <div class="card-body">-->
+<!--            <div class="justify-content-center">-->
+<!--                <p th:text="'Nomor Bioskop : ' + ${bioskop.noBioskop}"></p>-->
+<!--                <p th:text="'Nama Bioskop : ' + ${bioskop.namaBioskop}"></p>-->
+<!--                <p th:text="'Alamat Bioskop : ' + ${bioskop.alamatBioskop}"></p>-->
+<!--                <p th:text="'Jumlah Studio Bioskop : ' + ${bioskop.jumlahStudio}"></p>-->
+<!--                <p th:text="'Waktu Buka Bioskop : ' + ${bioskop.waktuBuka}"></p>-->
+<!--                <p th:text="'Waktu Tutup Bioskop : ' + ${bioskop.waktuTutup}"></p>-->
+<!--                <br>-->
+<!--                <a class="btn btn-primary" th:href="@{/bioskop/view(noBioskop=${bioskop.noBioskop})}">Detail-->
+<!--                    Bioskop</a>-->
+<!--                <a class="btn btn-primary" th:href="@{/bioskop/update/} + ${bioskop.noBioskop}">Update Bioskop</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <br>-->
+<!--    </div>-->
+
 
 </body>
 

@@ -16,6 +16,7 @@
         <h2>Tambah Bioskop</h2>
         <br>
         <form th:action="@{/bioskop/add}" th:object="${bioskop}" method="POST">
+          <input type="hidden" th:field="${bioskop.noBioskop}">
           Nama Bioskop : <br>
           <input required class="form-control" type="text" name="namaBioskop" />
           <br><br>
@@ -35,6 +36,29 @@
           Waktu Tutup : <br>
           <input required class="form-control" type="time" name="waktuTutup" />
           <br><br>
+
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Nama Film</th>
+              <th>
+                <a class="btn btn-primary" href="/">Tambah Row</a>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <select class="form-control" th:field="*{listFilm}">
+                    <option th:each="film : ${listFilm}" th:value="${film.noFilm}" th:text="${film.namaFilm}"></option>
+                  </select>
+                </td>
+                <td>
+                  <a class="btn btn-danger" href="/">Hapus</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
           <button class="btn btn-primary" type="submit">Submit</button>
           <a class="btn btn-primary" href="/">Home</a>

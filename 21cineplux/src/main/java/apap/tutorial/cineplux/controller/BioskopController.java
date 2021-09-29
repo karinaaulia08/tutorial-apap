@@ -2,7 +2,9 @@ package apap.tutorial.cineplux.controller;
 
 import apap.tutorial.cineplux.model.BioskopModel;
 import apap.tutorial.cineplux.model.PenjagaModel;
+import apap.tutorial.cineplux.model.FilmModel;
 import apap.tutorial.cineplux.service.BioskopService;
+import apap.tutorial.cineplux.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -22,9 +24,15 @@ public class BioskopController {
     @Autowired
     private BioskopService bioskopService;
 
+    @Qualifier("filmServiceImpl")
+    @Autowired
+    private FilmService filmService;
+
     @GetMapping("/bioskop/add")
     public String addBioskopForm(Model model) {
         model.addAttribute("bioskop", new BioskopModel());
+        List<FilmModel> listFilm = filmService.getListFilm();
+        model.addAttribute("listFilm", listFilm);
         return "form-add-bioskop";
     }
 
@@ -42,6 +50,7 @@ public class BioskopController {
     public String listBioskop(Model model) {
         List<BioskopModel> listBioskop = bioskopService.getBioskopList();
         model.addAttribute("listBioskop", listBioskop);
+        model.addAttribute("page", 1);
         return "viewall-bioskop";
     }
 
@@ -62,10 +71,11 @@ public class BioskopController {
         if(waktuSekarang.isAfter(waktuTutup) || waktuSekarang.isBefore(waktuBuka)) {
             isBioskopClose = true;
         }
+        List<FilmModel> listFilm = bioskop.getListFilm();
         model.addAttribute("bioskop", bioskop);
         model.addAttribute("listPenjaga", listPenjaga);
+        model.addAttribute("listFilm", listFilm);
         model.addAttribute("isBioskopClose", isBioskopClose);
-
         return "view-bioskop";
     }
 
