@@ -15,6 +15,8 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -28,10 +30,15 @@ public class BioskopController {
     @Autowired
     private FilmService filmService;
 
+
     @GetMapping("/bioskop/add")
-    public String addBioskopForm(Model model) {
-        model.addAttribute("bioskop", new BioskopModel());
+    public String addBioskopForm(
+            @ModelAttribute FilmModel film,
+            Model model) {
         List<FilmModel> listFilm = filmService.getListFilm();
+        rows.addFilm(film);
+        model.addAttribute("bioskop", new BioskopModel());
+        model.addAttribute("listRows", rows.getListRows());
         model.addAttribute("listFilm", listFilm);
         return "form-add-bioskop";
     }
@@ -45,6 +52,48 @@ public class BioskopController {
         model.addAttribute("noBioskop", bioskop.getNoBioskop());
         return "add-bioskop";
     }
+
+    public class Rows {
+        private List<FilmModel> listRows = new ArrayList<>();
+
+        public void addFilm(FilmModel film) {
+            this.listRows.add(film);
+        }
+
+        public void deleteFilm(Integer index) { this.listRows.remove(index - 1);}
+
+        public List<FilmModel> getListRows() {
+            return listRows;
+        }
+
+    }
+    Rows rows = new Rows();
+    @GetMapping("/row/add")
+    public String addRow(
+            @ModelAttribute FilmModel film,
+            Model model
+        ) {
+        rows.addFilm(film);
+        model.addAttribute("listRows", rows.getListRows());
+        model.addAttribute("bioskop", new BioskopModel());
+        List<FilmModel> listFilm = filmService.getListFilm();
+        model.addAttribute("listFilm", listFilm);
+        return "form-add-bioskop";
+    }
+
+    @GetMapping("/row/delete/{index}")
+    public String deleteRow(
+            @PathVariable Integer index,
+            Model model
+    ) {
+        rows.deleteFilm(index);
+        model.addAttribute("listRows", rows.getListRows());
+        model.addAttribute("bioskop", new BioskopModel());
+        List<FilmModel> listFilm = filmService.getListFilm();
+        model.addAttribute("listFilm", listFilm);
+        return "form-add-bioskop";
+    }
+
 
     @GetMapping("/bioskop/viewall")
     public String listBioskop(Model model) {
@@ -78,6 +127,7 @@ public class BioskopController {
         model.addAttribute("isBioskopClose", isBioskopClose);
         return "view-bioskop";
     }
+
 
     @GetMapping("/bioskop/update/{noBioskop}")
     public String updateBioskopForm(

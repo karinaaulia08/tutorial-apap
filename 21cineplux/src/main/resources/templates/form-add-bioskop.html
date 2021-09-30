@@ -42,19 +42,19 @@
             <tr>
               <th>Nama Film</th>
               <th>
-                <a class="btn btn-primary" href="/">Tambah Row</a>
+                <a class="btn btn-primary" th:href="@{/row/add}">Tambah Row</a>
               </th>
             </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr th:each="row, iterationStatus : ${listRows}">
                 <td>
                   <select class="form-control" th:field="*{listFilm}">
                     <option th:each="film : ${listFilm}" th:value="${film.noFilm}" th:text="${film.namaFilm}"></option>
                   </select>
                 </td>
                 <td>
-                  <a class="btn btn-danger" href="/">Hapus</a>
+                  <a class="btn btn-danger" th:href="@{/row/delete/} + ${iterationStatus.count}">Hapus</a>
                 </td>
               </tr>
             </tbody>

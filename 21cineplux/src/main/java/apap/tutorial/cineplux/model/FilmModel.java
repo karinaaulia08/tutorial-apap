@@ -28,7 +28,7 @@ public class FilmModel implements Serializable{
     private String namaFilm;
 
     @NotNull
-    @Size(max=500)
+    @Size(max=50)
     @Column(nullable = false)
     private String deskripsiFilm;
 
