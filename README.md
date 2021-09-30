@@ -11,7 +11,8 @@
    terhadap objek. Seperti yang digunakan pada form-add-penjaga.html, yaitu th:object="${penjaga}" dan th:field="*{bioskop}".* Tanpa menggunakan th:object,
    th:field perlu dispesifikan objeknya, misalnya seperti th:field="*{penjaga.bioskop}".
 3. **Jelaskan perbedaan dari * dan $ pada saat penggunaan th:object! Kapan harus dipakai?**
-   <br> $ digunakan untuk mengekspresikan object yang ingin digunakan, sedangkan * digunakan untuk menunjuk kepada atribut dari object tersebut.
+   <br> $ merupakan _variable expressions_ yang digunakan ketika ingin menunjuk kepada suatu object, sedangkan * 
+   merupakan _selection expressions_ yang digunakan untuk menunjuk kepada atribut dari suatu object.
 
 ## Tutorial 3
 1. **Tolong jelaskan secara singkat apa kegunaan dari anotasi-anotasi yang ada pada model
