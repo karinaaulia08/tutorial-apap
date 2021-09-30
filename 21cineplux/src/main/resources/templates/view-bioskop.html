@@ -90,8 +90,8 @@
                             <td th:text="${film.noFilm}"></td>
                             <td th:text="${film.namaFilm}"></td>
                             <td th:text="${film.deskripsiFilm}"></td>
-                            <td th:if="${film.isDisplaying == 0}" th:text="'YA'"></td>
-                            <td th:if="${film.isDisplaying == 1}" th:text="'TIDAK'"></td>
+                            <td th:if="${film.isDisplaying == true}" th:text="'YA'"></td>
+                            <td th:if="${film.isDisplaying == false}" th:text="'TIDAK'"></td>
                         </tr>
                         </tbody>
                     </table>
