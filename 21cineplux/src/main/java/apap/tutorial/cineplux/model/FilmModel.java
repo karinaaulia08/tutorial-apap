@@ -28,6 +28,11 @@ public class FilmModel implements Serializable{
     private String namaFilm;
 
     @NotNull
+    @Size(max=50)
+    @Column(nullable = false)
+    private String deskripsiFilm;
+
+    @NotNull
     @Column(nullable = false)
     private Boolean isDisplaying;
 

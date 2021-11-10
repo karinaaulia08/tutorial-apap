@@ -2,7 +2,9 @@ package apap.tutorial.cineplux.controller;
 
 import apap.tutorial.cineplux.model.BioskopModel;
 import apap.tutorial.cineplux.model.PenjagaModel;
+import apap.tutorial.cineplux.model.FilmModel;
 import apap.tutorial.cineplux.service.BioskopService;
+import apap.tutorial.cineplux.service.FilmService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -11,15 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-=======
-import apap.tutorial.cineplux.service.BioskopService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,9 +26,20 @@ public class BioskopController {
     @Autowired
     private BioskopService bioskopService;
 
+    @Qualifier("filmServiceImpl")
+    @Autowired
+    private FilmService filmService;
+
+
     @GetMapping("/bioskop/add")
-    public String addBioskopForm(Model model) {
+    public String addBioskopForm(
+            @ModelAttribute FilmModel film,
+            Model model) {
+        List<FilmModel> listFilm = filmService.getListFilm();
+        rows.addFilm(film);
         model.addAttribute("bioskop", new BioskopModel());
+        model.addAttribute("listRows", rows.getListRows());
+        model.addAttribute("listFilm", listFilm);
         return "form-add-bioskop";
     }
 
@@ -45,10 +53,53 @@ public class BioskopController {
         return "add-bioskop";
     }
 
+    public class Rows {
+        private List<FilmModel> listRows = new ArrayList<>();
+
+        public void addFilm(FilmModel film) {
+            this.listRows.add(film);
+        }
+
+        public void deleteFilm(Integer index) { this.listRows.remove(index - 1);}
+
+        public List<FilmModel> getListRows() {
+            return listRows;
+        }
+
+    }
+    Rows rows = new Rows();
+    @GetMapping("/row/add")
+    public String addRow(
+            @ModelAttribute FilmModel film,
+            Model model
+        ) {
+        rows.addFilm(film);
+        model.addAttribute("listRows", rows.getListRows());
+        model.addAttribute("bioskop", new BioskopModel());
+        List<FilmModel> listFilm = filmService.getListFilm();
+        model.addAttribute("listFilm", listFilm);
+        return "form-add-bioskop";
+    }
+
+    @GetMapping("/row/delete/{index}")
+    public String deleteRow(
+            @PathVariable Integer index,
+            Model model
+    ) {
+        rows.deleteFilm(index);
+        model.addAttribute("listRows", rows.getListRows());
+        model.addAttribute("bioskop", new BioskopModel());
+        List<FilmModel> listFilm = filmService.getListFilm();
+        model.addAttribute("listFilm", listFilm);
+        return "form-add-bioskop";
+    }
+
+
     @GetMapping("/bioskop/viewall")
     public String listBioskop(Model model) {
         List<BioskopModel> listBioskop = bioskopService.getBioskopList();
         model.addAttribute("listBioskop", listBioskop);
+        model.addAttribute("page", 1);
         return "viewall-bioskop";
     }
 
@@ -69,12 +120,14 @@ public class BioskopController {
         if(waktuSekarang.isAfter(waktuTutup) || waktuSekarang.isBefore(waktuBuka)) {
             isBioskopClose = true;
         }
+        List<FilmModel> listFilm = bioskop.getListFilm();
         model.addAttribute("bioskop", bioskop);
         model.addAttribute("listPenjaga", listPenjaga);
+        model.addAttribute("listFilm", listFilm);
         model.addAttribute("isBioskopClose", isBioskopClose);
-
         return "view-bioskop";
     }
+
 
     @GetMapping("/bioskop/update/{noBioskop}")
     public String updateBioskopForm(

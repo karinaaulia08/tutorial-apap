@@ -1,7 +1,19 @@
 # Tutorial APAP
 ## Authors
 * **Karina Aulia Putri** - *1906298954* - *C*
----
+--- 
+## Tutorial 4
+1. **Jelaskan perbedaan th:include dan th:replace!**
+   <br> misalnya saya memiliki sebuah '<div', jika saya menggunakan th:include, maka fragment akan ditaruh di dalam div.
+   Akan tetapi jika saya menggunakan th:replace, maka fragments akan menggantikan div dengan keseluruhan kode dari fragment.
+2. **Jelaskan apa fungsi dari th:object!**
+   <br> th:object digunakan untuk mengikat suatu object. Dengan demikian, kita dapat menggunakan atribut dari object tersebut tanpa melakukan pemanggilan secara spesifik
+   terhadap objek. Seperti yang digunakan pada form-add-penjaga.html, yaitu th:object="${penjaga}" dan th:field="*{bioskop}".* Tanpa menggunakan th:object,
+   th:field perlu dispesifikan objeknya, misalnya seperti th:field="*{penjaga.bioskop}".
+3. **Jelaskan perbedaan dari * dan $ pada saat penggunaan th:object! Kapan harus dipakai?**
+   <br> $ merupakan _variable expressions_ yang digunakan ketika ingin menunjuk kepada suatu object, sedangkan * 
+   merupakan _selection expressions_ yang digunakan untuk menunjuk kepada atribut dari suatu object.
+
 ## Tutorial 3
 1. **Tolong jelaskan secara singkat apa kegunaan dari anotasi-anotasi yang ada pada model
    (@AllArgsConstructor, @NoArgsConstructor, @Setter, @Getter, @Entity, @Table)**

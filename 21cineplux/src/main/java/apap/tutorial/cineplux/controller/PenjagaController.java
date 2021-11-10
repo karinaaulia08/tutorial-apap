@@ -65,33 +65,52 @@ public class PenjagaController {
             @ModelAttribute PenjagaModel penjaga,
             Model model
     ) {
-        penjagaService.updatePenjaga(penjaga);
         model.addAttribute("noPenjaga", penjaga.getNoPenjaga());
         model.addAttribute("noBioskop", penjaga.getBioskop().getNoBioskop());
-        return "update-penjaga";
+        int res = 1;
+        res = penjagaService.updatePenjaga(penjaga);
+        if(res == 1) {
+            return "update-penjaga";
+        }
+        return "error-update-penjaga";
     }
 
-    @GetMapping("/penjaga/delete/{noPenjaga}")
-    public String deletePenjaga(
-            @PathVariable(value = "noPenjaga") Long noPenjaga,
+    @PostMapping("/penjaga/delete")
+    public String deletePenjagaSubmit(
+            @ModelAttribute BioskopModel bioskop,
             Model model
     ) {
-        PenjagaModel penjaga = penjagaService.getPenjagaByNoPenjaga(noPenjaga);
-        String namaPenjaga = "";
-        Long noBioskop = null;
-        String message = " ";
-        if (penjaga == null) {
-            message = "penjaga dengan id " + noPenjaga + " tidak ditemukan";
-        } else {
-            namaPenjaga = penjaga.getNamaPenjaga();
-            noBioskop = penjaga.getBioskop().getNoBioskop();
-            penjagaService.deletePenjaga(penjaga);
-            message = "Bioskop dengan nomor bioskop " + noBioskop + " berhasil menghapus " + namaPenjaga + " sebagai penjaga";
+        model.addAttribute("noBioskop", bioskop.getNoBioskop());
+        int res = 1;
+        for (PenjagaModel penjaga: bioskop.getListPenjaga()) {
+            res = penjagaService.deletePenjaga(penjaga);
         }
-        model.addAttribute("noBioskop", noBioskop);
-        model.addAttribute("namaPenjaga", namaPenjaga);
-        model.addAttribute("message", message);
-        return "delete-penjaga";
+        if(res == 1) {
+            return "delete-penjaga";
+        }
+        return "error-delete-penjaga";
     }
+//    @GetMapping("/penjaga/delete/{noPenjaga}")
+//    public String deletePenjaga(
+//            @PathVariable(value = "noPenjaga") Long noPenjaga,
+//            Model model
+//    ) {
+//        PenjagaModel penjaga = penjagaService.getPenjagaByNoPenjaga(noPenjaga);
+//        String namaPenjaga = "";
+//        Long noBioskop = null;
+//        String message = " ";
+//        if (penjaga == null) {
+//            message = "penjaga dengan id " + noPenjaga + " tidak ditemukan";
+//        } else {
+//            namaPenjaga = penjaga.getNamaPenjaga();
+//            noBioskop = penjaga.getBioskop().getNoBioskop();
+//            penjagaService.deletePenjaga(penjaga);
+//            message = "Bioskop dengan nomor bioskop " + noBioskop + " berhasil menghapus " + namaPenjaga + " sebagai penjaga";
+//        }
+//        model.addAttribute("noBioskop", noBioskop);
+//        model.addAttribute("namaPenjaga", namaPenjaga);
+//        model.addAttribute("message", message);
+//        return "delete-penjaga";
+//    }
 
 }
