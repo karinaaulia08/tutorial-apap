@@ -2,6 +2,13 @@
 ## Authors
 * **Karina Aulia Putri** - *1906298954* - *C*
 --- 
+## Tutorial 5
+1. **Apa itu Postman? Apa kegunaannya?**
+   <br> Postman adalah aplikasi yang berguna untuk menguji API.
+2. Jelaskan fungsi dari anotasi @JsonIgnoreProperties dan @JsonProperty.
+3. Apa kegunaan atribut WebClient?
+4. Apa itu ResponseEntity dan BindingResult? Apa kegunaannya?
+
 ## Tutorial 4
 1. **Jelaskan perbedaan th:include dan th:replace!**
    <br> misalnya saya memiliki sebuah '<div', jika saya menggunakan th:include, maka fragment akan ditaruh di dalam div.
