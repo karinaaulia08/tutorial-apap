@@ -13,6 +13,7 @@ import reactor.core.publisher.Mono;
 
 import javax.transaction.Transactional;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -32,6 +33,18 @@ public class BioskopRestServiceImpl implements BioskopRestService {
     @Override
     public List<BioskopModel> retrieveListBioskop() {
         return bioskopDB.findAll();
+    }
+
+    @Override
+    public List<BioskopModel> retrieveListBioskopByJumlahStudio(Integer jumlahStudio) {
+        List<BioskopModel> listBioskop = bioskopDB.findAll();
+        List<BioskopModel> result = new ArrayList<>();
+        for (BioskopModel bioskop: listBioskop) {
+            if (bioskop.getJumlahStudio() == jumlahStudio) {
+                result.add(bioskop);
+            }
+        }
+        return result;
     }
 
     @Override
