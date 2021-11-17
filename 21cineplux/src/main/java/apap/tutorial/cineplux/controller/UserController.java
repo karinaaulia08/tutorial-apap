@@ -60,14 +60,14 @@ public class UserController {
         UserModel user = new UserModel();
         model.addAttribute("user", user);
         model.addAttribute("message", "");
-        return "form-add-user";
+        return "form-change-password";
     }
 
     @PostMapping(value = "/changePassword")
     public String changePasswordSubmit(
-            RequestParam(value="newPassword") String newPassword,
-            RequestParam() String configurePassword,
             @ModelAttribute UserModel user,
+            String newPassword,
+            String configurePassword,
             Model model){
 
         UserModel user2 = userService.getUserByUsername(user.getUsername());
