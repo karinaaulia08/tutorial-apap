@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <title>21 Cineplux</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container-fluid">
+  <h2>Daftar Seluruh User</h2>
+  <br>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>No</th>
+      <th>Id</th>
+      <th>Username</th>
+      <th>Password</th>
+      <th>Email</th>
+      <th>Nama</th>
+      <th>Role</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user, iterationStatus : ${listUser}">
+      <td th:text="${iterationStatus.count}"></td>
+      <td th:text="${user.id}"></td>
+      <td th:text="${user.username}"></td>
+      <td th:text="${user.password}"></td>
+      <td th:text="${user.email}"></td>
+      <td th:text="${user.nama}"></td>
+      <td th:text="${user.role.role}"></td>
+      <td>
+        <a class="btn btn-outline-danger" th:href="@{/user/delete/} + ${user.username}">Hapus User</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <a class="btn btn-primary" th:href="@{/user/add}">Tambah User</a>
+
+</div>
+
+</body>
+
+</html>
