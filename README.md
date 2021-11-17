@@ -2,17 +2,15 @@
 ## Authors
 * **Karina Aulia Putri** - *1906298954* - *C*
 --- 
-##Tutorial 6
+## Tutorial 6
 1. **Jelaskan secara singkat perbedaan Otentikasi dan Otorisasi! Di bagian mana (dalam kode yang telah anda buat) konsep tersebut diimplementasi?**
 <br>
 **Otentikasi** adalah proses ketika memeriksa apakah user terdaftar dalam database sistem dan memberikan izin pengaksesan kepada user yang valid (tersimpan datanya).
 Sedangkan, **otorisasi** adalah proses ketika kita ingin memeriksa user yang memiliki hak ases terhadap suatu bagian sistem tertentu (halaman, fitur, dsb).
 <br> **Contoh penerapan di tutorial ini** <br>
-- Otentiksasi: Bagian Login
-<br> 
+- Otentiksasi: Bagian Login -> 
   @Autowired public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception{auth.userDetailsService(userDetailsService).passwordEncode(encoder());}
-- Otorisasi: hanya role "ADMIN" yang bisa melihat list semua user
-<br>
+- Otorisasi: hanya role "ADMIN" yang bisa melihat list semua user -> 
   .antMatchers("/user/viewall").hasAuthority("ADMIN")
 
 3. **Apa itu BCryptPasswordEncoder? Jelaskan secara singkat cara kerja dan tujuannya.**
@@ -27,6 +25,7 @@ Namun, jika dengan hashing maka password asli tidak dapat diketahui oleh orang l
 <br> UUID adalah sebuah string 32 karakter yang digenerate secara random dan nilainya unik. Penggunaannya sebagai ID yang dapat mengidentifikasi suatu informasi secara unik.
 6. **Apa kegunaan class UserDetailsServiceImpl.java? Mengapa harus ada class tersebut?**
 <br> class UserDetailsServiceImpl.java digunakan untuk mengambil informasi autentikasi dan otorisasi pengguna. Method loadUserByUsername() berguna untuk memasukkan informasi user ke API Spring security.
+
 ## Tutorial 5
 1. **Apa itu Postman? Apa kegunaannya?**
    <br> Postman adalah platform API untuk membangun dan menggunakan API. Postman berfungsi sebagai REST CLIENT untuk uji coba REST API dan digunakan sebagai tools untuk menguji API.
