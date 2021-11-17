@@ -2,15 +2,40 @@
 ## Authors
 * **Karina Aulia Putri** - *1906298954* - *C*
 --- 
+##Tutorial 6
+1. **Jelaskan secara singkat perbedaan Otentikasi dan Otorisasi! Di bagian mana (dalam kode yang telah anda buat) konsep tersebut diimplementasi?**
+<br>
+**Otentikasi** adalah proses ketika memeriksa apakah user terdaftar dalam database sistem dan memberikan izin pengaksesan kepada user yang valid (tersimpan datanya).
+Sedangkan, **otorisasi** adalah proses ketika kita ingin memeriksa user yang memiliki hak ases terhadap suatu bagian sistem tertentu (halaman, fitur, dsb).
+<br> **Contoh penerapan di tutorial ini** <br>
+- Otentiksasi: Bagian Login
+<br> 
+  @Autowired public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception{auth.userDetailsService(userDetailsService).passwordEncode(encoder());}
+- Otorisasi: hanya role "ADMIN" yang bisa melihat list semua user
+<br>
+  .antMatchers("/user/viewall").hasAuthority("ADMIN")
+
+3. **Apa itu BCryptPasswordEncoder? Jelaskan secara singkat cara kerja dan tujuannya.**
+<br> BCryptPasswordEncoder adalah implementasi default dari algoritma BCrypt, sebuah fungsi hashing yang dapat menjadikan password lebih aman 
+dengan melakukan enskripsi password menjadi random string.
+
+4. **Apakah penyimpanan password sebaiknya menggunakan encryption atau hashing? Mengapa
+   demikian?**
+<br> Penyimpanan password sebaiknya menggunakan **hashing**. Dikarenakan jika dengan encryption kita bisa saja mendapatkan password asli dari password yang sudah di encode jika kita memiliki kunci untuk decoding.
+Namun, jika dengan hashing maka password asli tidak dapat diketahui oleh orang lain karena nilai hash yang dihasilkan tidak dapat diubah.
+5. **Jelaskan secara singkat apa itu UUID beserta penggunaannya!**
+<br> UUID adalah sebuah string 32 karakter yang digenerate secara random dan nilainya unik. Penggunaannya sebagai ID yang dapat mengidentifikasi suatu informasi secara unik.
+6. **Apa kegunaan class UserDetailsServiceImpl.java? Mengapa harus ada class tersebut?**
+<br> class UserDetailsServiceImpl.java digunakan untuk mengambil informasi autentikasi dan otorisasi pengguna. Method loadUserByUsername() berguna untuk memasukkan informasi user ke API Spring security.
 ## Tutorial 5
 1. **Apa itu Postman? Apa kegunaannya?**
    <br> Postman adalah platform API untuk membangun dan menggunakan API. Postman berfungsi sebagai REST CLIENT untuk uji coba REST API dan digunakan sebagai tools untuk menguji API.
-2. Jelaskan fungsi dari anotasi @JsonIgnoreProperties dan @JsonProperty.
+2. **Jelaskan fungsi dari anotasi @JsonIgnoreProperties dan @JsonProperty** <br>
    - @JsonIgnoreProperties digunakan untuk mengabaikan suatu property sehingga properti tersebut tidak dimasukkan dalam JSON serialization dan deserialization.
    - @JsonProperty mendefinisikan properti logis yang digunakan dalam serialization dan deserialization pada JSON.
-3. Apa kegunaan atribut WebClient?
+3. **Apa kegunaan atribut WebClient?** <br>
    Non-blocking dan reactive client yang digunakan untuk melakukan HTTP requests. Dengan atribut webclient, di tutorial ini saya dapat menyambungkan ke uri API dengan metode get untuk mendapatkan output.
-4. Apa itu ResponseEntity dan BindingResult? Apa kegunaannya?
+4. **Apa itu ResponseEntity dan BindingResult? Apa kegunaannya?**
    - ResponseEntity berisi seluruh response yang didapatkan dari HTTP requests. Dengan Response Entity, kita dapat mengontrol elemen yang berada di dalamnya, seperti header, body, dan status code.
    - BindingResult adalah objek Spring yang menyimpan hasil validasi dan binding serta berisi error yang mungkin terjadi.
 ## Tutorial 4

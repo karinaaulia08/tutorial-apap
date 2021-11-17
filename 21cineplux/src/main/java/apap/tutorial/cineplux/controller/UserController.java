@@ -75,12 +75,12 @@ public class UserController {
         if (userService.isPasswordMatch(user.getPassword(), user2.getPassword())){
             if (newPassword.equals(configurePassword)){
                 userService.updatePassword(user2, newPassword);
-                model.addAttribute("message", "password berhasil diubah");
+                model.addAttribute("message", "Password berhasil diubah");
             }else {
-                model.addAttribute("message", "password tidak sama");
+                model.addAttribute("message", "Password baru dan password konfirmasi tidak sama");
             }
         }else {
-            model.addAttribute("message", "password salah");
+            model.addAttribute("message", "Password lama salah");
         }
             return "form-change-password";
     }
