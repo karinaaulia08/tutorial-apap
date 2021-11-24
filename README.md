@@ -2,6 +2,48 @@
 ## Authors
 * **Karina Aulia Putri** - *1906298954* - *C*
 --- 
+## Tutorial 7
+1. **Jelaskan apa yang Anda lakukan di latihan dalam satu paragraf per-soal. Berikan screenshot
+   sebagai ilustrasi dari apa yang Anda jelaskan.**
+![img_2.png](img_2.png)
+**Nomor 1** <br>
+Untuk menghapus item pada cart, saya mencoba membuat suatu property HandleRemoveItemFromCart
+yang konsepnya cukup mirip dengan property untuk menambah item. Dimana terdapat sebuah constant yang menampung item yang dipilih untuk dihapus,kemudian
+saya mencari index dari item tersebut. Lalu, apabila ditemukan indexnya, maka akan dibuat suatu constant result yang menampung hasil filtrasi item dari hasil operasi filter array
+removeItem (array yang berisi cartItems) dengan id tidak sama dengan removeItem, atau dengan kata lain saya mencoba membuat suatu array baru yang isinya item yang tidak dihapus. 
+Setelah itu, array result akan diset ke cartItems dan ShopItem akan diset menjadi false karena sudah dikeluarkan dari Cart.
+<br> **Nomor 2** <br>
+Untuk mengurangi jumlah balance, saya menambahkan "this.state.balance -= newItem.price;". Disini saya mencoba mengurangi balance dari state dengan mengambil nilai dari balance 
+kemudian jumlahnya dikurangi dengan harga dari item yang ditambahkan ke Cart. Sedangkan, untuk proses penghapusan item dari Cart
+saya menambahkan jumlah balance dengan item yang akan dihapus "this.state.balance += removeItem.price;". Berikut ketika diuji coba.
+- Kondisi setelah menambahkan item T-Shirt dan Jacket ke Cart
+![img_8.png](img_8.png)
+- Kondisi setelah menghapus item T-Shirt dari Cart
+![img_7.png](img_7.png)
+
+**Nomor 3** <br>
+Untuk nomor 3, saya menambahkan kondisi if (this.state.balance - newItem.price < 0), sehingga alert akan muncul ketika jumlah balance dikurangi price kurang dari 0. 
+Untuk alert, kode yang saya pakai adalah alert("Balance not sufficient");.
+
+- Berikut merupakan hasil ujicoba.
+
+![img_9.png](img_9.png)
+
+2. **Menurut pemahaman kamu selama pengerjaan tutorial ini, apa perbedaan antara state dan
+   props?** <br>
+State berlaku dan dikelola hanya di dalam komponen, tidak dapat dimodifikasi di luar komponen. Sedangkan props
+dapat menerima data dari parentnya dalam bentuk props (seperti parameter pada fungsi). Props dapat digunakan untuk meneruskan
+data ke child component.
+3. **Menurut kamu, apakah sebaiknya kita menggunakan component (e.g. List, Item) dalam
+   React? sebutkan alasannya.** <br>
+Ya, menurut saya sebaiknya kita menggunakan component. Hal ini dikarenakan penggunaan component dapat mempermudah kita dalam mengerjakan UI. Misalnya, ketika saya ingin mengubah kriteria dari Item,
+saya hanya akan berfokus pada component Item saja.
+4. **Apa perbedaan class component dan functional component?** <br>
+Functional component bersifat stateless, yaitu hanya bisa menggunakan props. Sedangkan, class components dapat menggunakan state maupun props.
+5. **Dalam react, apakah perbedaan component dan element?**
+Element merupakan bagian-bagian kecil yang menyusun component atau dapat dikatakan juga sebagai suatu object JavaScript. Sedangkan, component memiliki konsep yang menyerupai
+fungsi pada JavaScript. Namun, yang membedakan adalah parameternya berupa props dan returnnya adalah React Element.
+
 ## Tutorial 6
 1. **Jelaskan secara singkat perbedaan Otentikasi dan Otorisasi! Di bagian mana (dalam kode yang telah anda buat) konsep tersebut diimplementasi?**
 <br>
