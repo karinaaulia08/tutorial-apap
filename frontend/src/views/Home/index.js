@@ -15,6 +15,7 @@ export default class Home extends React.Component {
             cartItems: [],
             cartHidden: true,
             balance: 120,
+            hideDelButton: false,
         };
     }
     handleAddItemToCart = (item) => {
@@ -45,6 +46,23 @@ export default class Home extends React.Component {
             this.state.balance += removeItem.price;
         } 
     };
+    deleteCartItem = () => {
+        this.resetShopItem(this.state.cartItems);
+        this.setState({ cartItems: [], hideDelButton: true});
+    }
+
+    resetShopItem = (inCartItems) => {
+        const tempShopItems = this.state.shopItems;
+        let total = 0;
+        for (let i = 0; i< inCartItems.length; i++) {
+          const item = inCartItems[i];
+          const targetInd = tempShopItems.findIndex((it) => it.id === item.id);
+          tempShopItems[targetInd].inCart = false;
+          total = total + tempShopItems[targetInd].price;
+        }
+        this.state.balance += total;
+        this.setState({ shopItems: tempShopItems});
+    }
     //update button pada list item
     updateShopItem = (item, inCart) => {
         const tempShopItems = this.state.shopItems;
@@ -74,6 +92,19 @@ export default class Home extends React.Component {
                 </p>
                 <p className="text-center text-primary" >Your Balance: <b> {this.state.balance}</b> </p>
                 <div className="container pt-3">
+                    {!this.state.cartHidden ? 
+                        <div className="row">
+                            <div className="col-sm text-center">
+                                <button
+                                    hidden={this.state.hideDelButton}
+                                    className="btn btn-outline-danger"
+                                    onClick={this.deleteCartItem}
+                                >
+                                    Hapus Cart
+                                </button>
+                            </div>
+                        </div>
+                    : null}
                     <div className="row mt-3">
                         {!this.state.cartHidden ? (
                             <div className="col-sm">
