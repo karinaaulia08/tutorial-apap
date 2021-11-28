@@ -45,6 +45,12 @@ export default class Home extends React.Component {
             this.state.balance += removeItem.price;
         } 
     };
+    handleRemoveAllItemFromCart = (item) => {
+        const emptyItems = [];
+            this.setState({ cartItems: emptyItems});
+            this.state.balance = 120;
+        } 
+    };
     //update button pada list item
     updateShopItem = (item, inCart) => {
         const tempShopItems = this.state.shopItems;
@@ -69,6 +75,11 @@ export default class Home extends React.Component {
                             : <ViewStreamIcon/>}
                     </Fab>
                 </div>
+                {/* <div style={{ position: "fixed", top: 25, right: 25 }}>
+                    <Fab variant="extended" onClick={this.handleRemoveAllItemFromCart}>
+                            <ShoppingCartIcon />
+                    </Fab>
+                </div> */}
                 <p className="text-center text-secondary text-sm font-italic">
                     (this is a <strong>class-based</strong> application)
                 </p>
