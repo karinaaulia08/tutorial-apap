@@ -2,6 +2,31 @@
 ## Authors
 * **Karina Aulia Putri** - *1906298954* - *C*
 --- 
+## Tutorial 8
+1. Ceritakan langkah - langkah yang kalian lakukan untuk solve LATIHAN no.1, dan mengapa kalian
+   melakukan langkah - langkah tersebut?
+<br> Saya tidak melakukan apa-apa, karena ketika saya coba run hasilnya sudah seperti ini.
+2. Jelaskan fungsi dari async dan await!
+await berada di dalam async, dimana ketika suatu statement diberi keterangan await maka kode tersebut perlu menunggu
+sampai perintah yang ditandai oleh await selesai.
+3. Masukkan jawaban dari Screenshot yang diperintahkan di halaman 9 pada Component Lifecycle
+   pada pertanyaan ini.
+![img_10.png](img_10.png)
+![img_11.png](img_11.png)
+4. Jelaskan fungsi dari componentDidMount, shouldComponentUpdate,
+   componentDidUpdate, componentWillReceiveProps, componentWillUnmount.
+   Notes : Penjelasan harus mencantumkan “kapan fungsi dipanggil” dan “use case apa saja
+   yang biasanya menggunakan lifecycle method tersebut”.
+- componentDidMount: dipanggil setelah component melakukan mounting. Fungsi ini dapat digunakan apabila ingin menjalankan
+suatu code setelah semua component siap atau terpasang. Contoh use case ketika ingin menambahkan fungsi timer
+- shouldComponentUpdate: dipanggil ketika props atau state suatu component berubah. Fungsi ini digunakan untuk mengoptimalkan kinerja dan untuk
+  memutuskan apakah suatu komponen harus dirender ulang atau tidak.
+- componentDidUpdate: dipanggil setelah components dirender ulang (re-render). Dapat digunakan apabila ingin menerapkan sebuah fungsi auto-save yang akan 
+dipanggil setiap components berubah.
+- componentWillReceiveProps: dipanggil ketika component akan menerima props yang nilainya berubah.
+  Fungsi ini diperlukan jika ingin memperbarui nilai status dengan nilai props atau state terbaru.
+- componentWillUnmount: dipanggil saat komponen dihancurkan dan dihapus dari DOM. Digunakan untuk membersihkan
+hal-hal yang terbentuk ketika memanggil componentDidMount()
 ## Tutorial 7
 1. **Jelaskan apa yang Anda lakukan di latihan dalam satu paragraf per-soal. Berikan screenshot
    sebagai ilustrasi dari apa yang Anda jelaskan.**
