@@ -7,61 +7,13 @@ import Modal from "../../components/modal";
 import Badge from "@material-ui/core/Badge";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Fab } from "@material-ui/core";
+// import { useHistory } from "react-router-dom";
 import ViewStreamIcon from '@mui/icons-material/ViewStream';
 class ItemList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: [
-                // {
-                //     id: 1,
-                //     title: "Nintendo Switch",
-                //     price: "Rp5.000.000",
-                //     description: "The video game system you can play at home or on the go.",
-                //     category: "Console",
-                //     quantity: "100",
-                // },
-                // {
-                //     id: 2,
-                //     title: "Playstation 5",
-                //     price: "Rp12.000.000",
-                //     description: "A home video game console developed by Sony Interactive Entertainment.",
-                //     category: "Console",
-                //     quantity: "100",
-                // },
-                // {
-                //     id: 3,
-                //     title: "ASUS ROG Zephyrus G14",
-                //     price: "Rp17.000.000",
-                //     description: "ASUS ROG Zephyrus G14 is a successful equipment for work and entertainment.",
-                //     category: "Laptop",
-                //     quantity: "100",
-                // }
-                // {
-                //     id: 2,
-                //     title: "baju naruto",
-                //     price: "1000",
-                //     description: "bahannya bagus",
-                //     category: "baju",
-                //     quantity: "100",
-                // },
-                // {
-                //     id: 3,
-                //     title: "baju sasuke",
-                //     price: "1000",
-                //     description: "bahannya bagus",
-                //     category: "baju",
-                //     quantity: "100",
-                // },
-                // {
-                //     id: 4,
-                //     title: "Lompat tali",
-                //     price: "1000",
-                //     description: "bahannya bagus",
-                //     category: "baju",
-                //     quantity: "100",
-                // }
-            ],
+            items: [],
             isLoading: false,
             isCreate: false,
             isEdit: false,
@@ -80,6 +32,10 @@ class ItemList extends Component {
         this.handleEditItem = this.handleEditItem.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
+        this.handleAddToCart = this.handleAddToCart.bind(this);
+        this.handleEditStok = this.handleEditStok.bind(this);
+        // this.routeChange = this.routeChange.bind(this);
+
     }
     handleCancel(event) {
         event.preventDefault();
@@ -88,35 +44,36 @@ class ItemList extends Component {
     handleAddItem() {
         this.setState({ isCreate:true });
     }
-    // handleAddItemToCart(item) {
-    //     const total
-    //     this.setState({
-    //         id: item.id,
-    //         quantity: item.quantity
-    //     })
-    // }
-    // async handleAddItemToCartSubmit(event) {
-    //     event.preventDefault();
-    //     try {
-    //         const data = {
-    //             idItem: item.id,
-    //             quantity: item.quantity
-    //         };
-    //         await APIConfig.post("/item", data);
-    //         this.setState({
-    //             title: "",
-    //             price: 0,
-    //             description: "",
-    //             category: "",
-    //             quantity: 0
-    //         });
-    //         this.loadData();
-    //     } catch (error) {
-    //         alert("Oops terjadi masalah pada server");
-    //         console.log(error);
-    //     }
-    //     this.handleCancel(event);
-    // }
+    async handleAddToCart(input, id, title, price, description, category, quantity) {
+        try {
+            if (input <= quantity) {
+                const data = {
+                    idItem: id,
+                    quantity: input
+                };
+                await APIConfig.post("/cart", data);
+                const stok = quantity - input;
+                this.handleEditStok(id, title, price, description, category, stok)
+                this.loadData()
+            } else {
+                alert("Jumlah stok kurang")
+            }
+        } catch (error) {
+            alert("Oops terjadi masalah pada server");
+            console.log(error);
+        }
+    }
+    async handleEditStok(id, title, price, description, category, stok) {
+        const data = {
+            title: title,
+            price: price,
+            description: description,
+            category: category,
+            quantity: stok
+        };
+        await APIConfig.put(`/item/${id}`, data);
+    }
+
 
     handleEditItem(item) {
         this.setState({
@@ -206,17 +163,34 @@ class ItemList extends Component {
 
     componentDidMount() {
         this.loadData();
+        this.loadDataCart();
     }
     async loadData() {
         try {
             const { data } = await APIConfig.get("/item");
-            this.setState({ items: data.result });
+            this.setState({ 
+                items: data.result });
         } catch (error) {
             alert("Oops terjadi masalah pada server");
             console.log(error);
         }
     }
-
+    async loadDataCart() {
+        try {
+            const { data } = await APIConfig.get("/cart");
+            this.setState({ 
+                cartItems: data.result });
+        } catch (error) {
+            alert("Oops terjadi masalah pada server");
+            console.log(error);
+        }
+    }
+    
+    // routeChange=()=> {
+    //     let path = `cart`;
+    //     let history = useHistory();
+    //     history.push(path);
+    //   }
 
     render() {
         return (
@@ -224,7 +198,7 @@ class ItemList extends Component {
                 <div className={classes.itemList}>
                     <h1 className={classes.title}>All Items</h1>
                     <div style={{ position: "fixed", top: 25, right: 25 }}>
-                        <Fab variant="extended" onClick={this.handleToggle}>
+                        <Fab variant="extended" onClick={event =>  window.location.href='/cart'}>
                             <Badge color="secondary" badgeContent={this.state.cartItems.length}>
                                 <ShoppingCartIcon />
                             </Badge>
@@ -253,7 +227,7 @@ class ItemList extends Component {
                                 quantity={item.quantity}
                                 handleEdit={() => this.handleEditItem(item)}
                                 handleDelete={() => this.handleDeleteItem(item)}
-                                handleAddToCart={() => this.handleAddToCart(item)}
+                                handleAddToCart={this.handleAddToCart}
                             />
                         ))}
                     </div>
